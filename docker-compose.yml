@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  donna-api:
+    build: .
+    container_name: donna-api
+    restart: always
+    networks:
+      - traefik-network
+    volumes:
+      - ./logs:/app/logs
+      - ./data:/app/data
+    environment:
+      - PYTHONUNBUFFERED=1
+      - ENVIRONMENT=production
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.donna-api.rule=Host(`api.omoniprestanceholding.com`)"
+      - "traefik.http.routers.donna-api.entrypoints=websecure"
+      - "traefik.http.routers.donna-api.tls.certresolver=letsencrypt"
+      - "traefik.http.services.donna-api.loadbalancer.server.port=8000"
+      - "traefik.http.middlewares.donna-api.headers.customFrameOptionsValue=SAMEORIGIN"
+      - "traefik.http.middlewares.donna-api.headers.customResponseHeaders.X-Frame-Options=SAMEORIGIN"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/v1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+networks:
+  traefik-network:
+    external: true
