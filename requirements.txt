@@ -1,8 +1,26 @@
+# FastAPI et serveur web
 fastapi==0.104.1
 uvicorn[standard]==0.24.0
+gunicorn==21.2.0
+
+# Validation et parsing
 pydantic==2.5.0
-pydantic-settings==2.1.0
 python-multipart==0.0.6
+
+# HTTP client pour les communications entre services
 httpx==0.25.2
-python-dotenv==1.0.0
-sqlalchemy==2.0.23
+
+# Authentification et sécurité
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+
+# Services externes
+stripe==7.8.0
+python-telegram-bot==20.7
+google-api-python-client==2.109.0
+
+# Système et monitoring
+psutil==5.9.6
+
+# Logging et utilitaires
+python-json-logger==2.0.7
